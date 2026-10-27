@@ -1,5 +1,5 @@
 /* (c) https://github.com/MontiCore/monticore */
-package de.monticore.statechartwithtimer.parser;
+package de.monticore.timetriggeredstatecharts.parser;
 
 import de.monticore.scbasis._ast.ASTSCArtifact;
 import de.monticore.temporal.isotemporals._ast.ASTISODateTime;
@@ -10,10 +10,10 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import de.monticore.statechartwithtimer.StatechartWithTimerMill;
-import de.monticore.statechartwithtimer._ast.ASTTimerEvent;
-import de.monticore.statechartwithtimer._parser.StatechartWithTimerParser;
-import de.monticore.statechartwithtimer.lang.AbstractTest;
+import de.monticore.timetriggeredstatecharts.TimeTriggeredStatechartsMill;
+import de.monticore.timetriggeredstatecharts._ast.ASTTimerEvent;
+import de.monticore.timetriggeredstatecharts._parser.TimeTriggeredStatechartsParser;
+import de.monticore.timetriggeredstatecharts.lang.AbstractTest;
 import de.monticore.temporal.timetriggerconditions._ast.ASTOnCondition;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -59,8 +59,8 @@ public class OnConditionParserTest extends AbstractTest {
   
   @Test
   public void testOnConditionResourceParses() throws IOException {
-    StatechartWithTimerParser parser = StatechartWithTimerMill.parser();
-    var result = parser.parse("src/test/resources/statechartwithtimer/parser/OnStatechart.sc");
+    TimeTriggeredStatechartsParser parser = TimeTriggeredStatechartsMill.parser();
+    var result = parser.parse("src/test/resources/timetriggeredstatecharts/parser/OnStatechart.sc");
     
     assertFalse(parser.hasErrors());
     assertTrue(result.isPresent());
@@ -70,7 +70,7 @@ public class OnConditionParserTest extends AbstractTest {
   @ParameterizedTest(name = "malformed on condition: {0}")
   @ValueSource(strings = { "on", "on tomorrow" })
   public void testMalformedOnConditionsDoNotParse(String event) throws IOException {
-    StatechartWithTimerParser parser = StatechartWithTimerMill.parser();
+    TimeTriggeredStatechartsParser parser = TimeTriggeredStatechartsMill.parser();
     parser.parse_StringSCArtifact(statechartWith(event));
     
     assertTrue(parser.hasErrors(), event);
@@ -78,9 +78,9 @@ public class OnConditionParserTest extends AbstractTest {
   
   protected List<ASTOnCondition> findConditions(ASTSCArtifact statechart) {
     List<ASTOnCondition> conditions = new ArrayList<>();
-    var traverser = StatechartWithTimerMill.inheritanceTraverser();
-    traverser.add4StatechartWithTimer(
-        new de.monticore.statechartwithtimer._visitor.StatechartWithTimerVisitor2() {
+    var traverser = TimeTriggeredStatechartsMill.inheritanceTraverser();
+    traverser.add4TimeTriggeredStatecharts(
+        new de.monticore.timetriggeredstatecharts._visitor.TimeTriggeredStatechartsVisitor2() {
           
           @Override
           public void visit(ASTTimerEvent node) {

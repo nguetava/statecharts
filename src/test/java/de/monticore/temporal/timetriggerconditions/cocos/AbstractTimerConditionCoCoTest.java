@@ -4,9 +4,9 @@ package de.monticore.temporal.timetriggerconditions.cocos;
 import de.monticore.scbasis._ast.ASTSCArtifact;
 import de.se_rwth.commons.logging.Finding;
 import de.se_rwth.commons.logging.Log;
-import de.monticore.statechartwithtimer.StatechartWithTimerMill;
-import de.monticore.statechartwithtimer._ast.ASTTimerEvent;
-import de.monticore.statechartwithtimer.lang.AbstractTest;
+import de.monticore.timetriggeredstatecharts.TimeTriggeredStatechartsMill;
+import de.monticore.timetriggeredstatecharts._ast.ASTTimerEvent;
+import de.monticore.timetriggeredstatecharts.lang.AbstractTest;
 import de.monticore.temporal.timetriggerconditions._ast.ASTTimeTriggerCondition;
 import de.monticore.temporal.timetriggerconditions._cocos.TimeTriggerConditionsCoCoChecker;
 
@@ -73,9 +73,9 @@ public abstract class AbstractTimerConditionCoCoTest extends AbstractTest {
         """.formatted(input));
     
     List<ASTTimeTriggerCondition> conditions = new ArrayList<>();
-    var traverser = StatechartWithTimerMill.inheritanceTraverser();
-    traverser.add4StatechartWithTimer(
-        new de.monticore.statechartwithtimer._visitor.StatechartWithTimerVisitor2() {
+    var traverser = TimeTriggeredStatechartsMill.inheritanceTraverser();
+    traverser.add4TimeTriggeredStatecharts(
+        new de.monticore.timetriggeredstatecharts._visitor.TimeTriggeredStatechartsVisitor2() {
           
           @Override
           public void visit(ASTTimerEvent node) {

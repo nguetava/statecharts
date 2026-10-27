@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import de.se_rwth.commons.logging.LogStub;
-import de.monticore.statechartwithtimer.StatechartWithTimerMill;
+import de.monticore.timetriggeredstatecharts.TimeTriggeredStatechartsMill;
 import de.monticore.temporal.timetriggerconditions._ast.ASTOnCondition;
 
 public class ISOTemporalsConversionsTest {
@@ -50,9 +50,9 @@ public class ISOTemporalsConversionsTest {
   }
   
   protected ASTOnCondition parse(String source) throws IOException {
-    StatechartWithTimerMill.reset();
-    StatechartWithTimerMill.init();
-    var parser = StatechartWithTimerMill.parser();
+    TimeTriggeredStatechartsMill.reset();
+    TimeTriggeredStatechartsMill.init();
+    var parser = TimeTriggeredStatechartsMill.parser();
     var result = parser.parse_StringOnCondition(source);
     assertFalse(parser.hasErrors(), source + ": " + de.se_rwth.commons.logging.Log.getFindings());
     assertTrue(result.isPresent(), source);

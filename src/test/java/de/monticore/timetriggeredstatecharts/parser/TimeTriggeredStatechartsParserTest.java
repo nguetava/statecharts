@@ -1,15 +1,15 @@
 /* (c) https://github.com/MontiCore/monticore */
-package de.monticore.statechartwithtimer.parser;
+package de.monticore.timetriggeredstatecharts.parser;
 
 import de.monticore.scbasis._ast.ASTSCArtifact;
 import de.se_rwth.commons.logging.Log;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import de.monticore.statechartwithtimer.StatechartWithTimerMill;
-import de.monticore.statechartwithtimer._ast.ASTTimerEvent;
-import de.monticore.statechartwithtimer._parser.StatechartWithTimerParser;
-import de.monticore.statechartwithtimer.lang.AbstractTest;
+import de.monticore.timetriggeredstatecharts.TimeTriggeredStatechartsMill;
+import de.monticore.timetriggeredstatecharts._ast.ASTTimerEvent;
+import de.monticore.timetriggeredstatecharts._parser.TimeTriggeredStatechartsParser;
+import de.monticore.timetriggeredstatecharts.lang.AbstractTest;
 import de.monticore.temporal.timetriggerconditions._ast.ASTAfterCondition;
 import de.monticore.temporal.timetriggerconditions._ast.ASTEveryTimeCondition;
 import de.monticore.temporal.timetriggerconditions._ast.ASTOnCondition;
@@ -27,24 +27,26 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class StatechartWithTimerParserTest extends AbstractTest {
+public class TimeTriggeredStatechartsParserTest extends AbstractTest {
   
   @Test
   public void testMyStatechart() {
-    ASTSCArtifact a = parseModel("src/test/resources/statechartwithtimer/parser/MyStatechart.sc");
+    ASTSCArtifact a = parseModel(
+        "src/test/resources/timetriggeredstatecharts/parser/MyStatechart.sc");
     assertNotNull(a);
   }
   
   @Test
   public void testTimerStatechart() {
     ASTSCArtifact a = parseModel(
-        "src/test/resources/statechartwithtimer/parser/TimerStatechart.sc");
+        "src/test/resources/timetriggeredstatecharts/parser/TimerStatechart.sc");
     assertNotNull(a);
   }
   
   @Test
   public void testOnConditionStatechart() {
-    ASTSCArtifact a = parseModel("src/test/resources/statechartwithtimer/parser/OnStatechart.sc");
+    ASTSCArtifact a = parseModel(
+        "src/test/resources/timetriggeredstatecharts/parser/OnStatechart.sc");
     assertNotNull(a);
   }
   
@@ -85,7 +87,7 @@ public class StatechartWithTimerParserTest extends AbstractTest {
   
   @Test
   public void testMalformedAfterDoesNotParse() throws IOException {
-    StatechartWithTimerParser parser = StatechartWithTimerMill.parser();
+    TimeTriggeredStatechartsParser parser = TimeTriggeredStatechartsMill.parser();
     parser.parse_StringSCArtifact(timerStatechartWith("after"));
     
     assertTrue(parser.hasErrors());
@@ -94,7 +96,7 @@ public class StatechartWithTimerParserTest extends AbstractTest {
   @ParameterizedTest(name = "malformed ISO period: {0}")
   @ValueSource(strings = { "after P1W2D", "after -PT1S", "after PX" })
   public void testMalformedIsoAfterPeriodsDoNotParse(String condition) throws IOException {
-    StatechartWithTimerParser parser = StatechartWithTimerMill.parser();
+    TimeTriggeredStatechartsParser parser = TimeTriggeredStatechartsMill.parser();
     var result = parser.parse_StringSCArtifact(timerStatechartWith(condition));
     
     assertTrue(parser.hasErrors() || result.isEmpty(), condition);
@@ -148,7 +150,7 @@ public class StatechartWithTimerParserTest extends AbstractTest {
   @Test
   public void testTimerConditionCoCoOnStatechart() {
     ASTSCArtifact statechart = parseModel(
-        "src/test/resources/statechartwithtimer/parser/TimerStatechart.sc");
+        "src/test/resources/timetriggeredstatecharts/parser/TimerStatechart.sc");
     List<ASTAfterCondition> conditions = findAfterConditions(statechart);
     
     assertFalse(conditions.isEmpty());
@@ -174,9 +176,9 @@ public class StatechartWithTimerParserTest extends AbstractTest {
   
   protected List<ASTAfterCondition> findAfterConditions(ASTSCArtifact statechart) {
     List<ASTAfterCondition> conditions = new ArrayList<>();
-    var traverser = StatechartWithTimerMill.inheritanceTraverser();
-    traverser.add4StatechartWithTimer(
-        new de.monticore.statechartwithtimer._visitor.StatechartWithTimerVisitor2() {
+    var traverser = TimeTriggeredStatechartsMill.inheritanceTraverser();
+    traverser.add4TimeTriggeredStatecharts(
+        new de.monticore.timetriggeredstatecharts._visitor.TimeTriggeredStatechartsVisitor2() {
           
           @Override
           public void visit(ASTTimerEvent node) {
@@ -193,9 +195,9 @@ public class StatechartWithTimerParserTest extends AbstractTest {
   
   protected List<ASTAfterCondition> findIsoAfterConditions(ASTSCArtifact statechart) {
     List<ASTAfterCondition> conditions = new ArrayList<>();
-    var traverser = StatechartWithTimerMill.inheritanceTraverser();
-    traverser.add4StatechartWithTimer(
-        new de.monticore.statechartwithtimer._visitor.StatechartWithTimerVisitor2() {
+    var traverser = TimeTriggeredStatechartsMill.inheritanceTraverser();
+    traverser.add4TimeTriggeredStatecharts(
+        new de.monticore.timetriggeredstatecharts._visitor.TimeTriggeredStatechartsVisitor2() {
           
           @Override
           public void visit(ASTTimerEvent node) {
@@ -218,9 +220,9 @@ public class StatechartWithTimerParserTest extends AbstractTest {
   
   protected List<ASTOnCondition> findOnConditions(ASTSCArtifact statechart) {
     List<ASTOnCondition> conditions = new ArrayList<>();
-    var traverser = StatechartWithTimerMill.inheritanceTraverser();
-    traverser.add4StatechartWithTimer(
-        new de.monticore.statechartwithtimer._visitor.StatechartWithTimerVisitor2() {
+    var traverser = TimeTriggeredStatechartsMill.inheritanceTraverser();
+    traverser.add4TimeTriggeredStatecharts(
+        new de.monticore.timetriggeredstatecharts._visitor.TimeTriggeredStatechartsVisitor2() {
           
           @Override
           public void visit(ASTTimerEvent node) {
@@ -242,9 +244,9 @@ public class StatechartWithTimerParserTest extends AbstractTest {
   
   protected List<ASTEveryTimeCondition> findEveryTimeConditions(ASTSCArtifact statechart) {
     List<ASTEveryTimeCondition> conditions = new ArrayList<>();
-    var traverser = StatechartWithTimerMill.inheritanceTraverser();
-    traverser.add4StatechartWithTimer(
-        new de.monticore.statechartwithtimer._visitor.StatechartWithTimerVisitor2() {
+    var traverser = TimeTriggeredStatechartsMill.inheritanceTraverser();
+    traverser.add4TimeTriggeredStatecharts(
+        new de.monticore.timetriggeredstatecharts._visitor.TimeTriggeredStatechartsVisitor2() {
           
           @Override
           public void visit(ASTTimerEvent node) {

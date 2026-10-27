@@ -5,7 +5,7 @@ import de.se_rwth.commons.logging.Log;
 import java.io.IOException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import de.monticore.statechartwithtimer.StatechartWithTimerMill;
+import de.monticore.timetriggeredstatecharts.TimeTriggeredStatechartsMill;
 import de.monticore.temporal.timetriggerconditions._cocos.EveryTimeConditionHasValidRepetitions;
 import de.monticore.temporal.timetriggerconditions._cocos.TimeTriggerConditionsCoCoChecker;
 
@@ -42,7 +42,7 @@ public class EveryTimeConditionHasValidRepetitionsTest extends AbstractTimerCond
   @ParameterizedTest(name = "repetition count rejected by the parser: {0}")
   @ValueSource(strings = { "every 10s -1 times", "every 10s 1.5 times" })
   public void testNonNaturalRepetitionCountsAreRejectedByParser(String input) throws IOException {
-    var parser = StatechartWithTimerMill.parser();
+    var parser = TimeTriggeredStatechartsMill.parser();
     var result = parser.parse_StringSCArtifact("""
         statechart InvalidRepetitions {
           initial state A;

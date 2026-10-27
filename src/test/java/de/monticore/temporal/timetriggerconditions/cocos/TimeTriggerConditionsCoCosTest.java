@@ -5,9 +5,9 @@ import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.LogStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import de.monticore.statechartwithtimer.StatechartWithTimerMill;
-import de.monticore.statechartwithtimer._cocos.StatechartWithTimerCoCoChecker;
-import de.monticore.statechartwithtimer._parser.StatechartWithTimerParser;
+import de.monticore.timetriggeredstatecharts.TimeTriggeredStatechartsMill;
+import de.monticore.timetriggeredstatecharts._cocos.TimeTriggeredStatechartsCoCoChecker;
+import de.monticore.timetriggeredstatecharts._parser.TimeTriggeredStatechartsParser;
 import de.monticore.temporal.timetriggerconditions._cocos.AfterConditionHasValidDuration;
 import de.monticore.temporal.timetriggerconditions._cocos.AfterConditionHasValidPeriod;
 import de.monticore.temporal.timetriggerconditions._cocos.CronExpressionIsValid;
@@ -24,8 +24,8 @@ public class TimeTriggerConditionsCoCosTest {
   
   @BeforeEach
   public void setUp() {
-    StatechartWithTimerMill.reset();
-    StatechartWithTimerMill.init();
+    TimeTriggeredStatechartsMill.reset();
+    TimeTriggeredStatechartsMill.init();
     LogStub.init();
     Log.enableFailQuick(false);
     Log.getFindings().clear();
@@ -33,7 +33,7 @@ public class TimeTriggerConditionsCoCosTest {
   
   @Test
   public void testConfiguredCheckerRunsAllConditionCoCos() throws IOException {
-    StatechartWithTimerParser parser = StatechartWithTimerMill.parser();
+    TimeTriggeredStatechartsParser parser = TimeTriggeredStatechartsMill.parser();
     var result = parser.parse_StringSCArtifact("""
         statechart InvalidTimerConditions {
           initial state A;
@@ -51,7 +51,7 @@ public class TimeTriggerConditionsCoCosTest {
     assertTrue(result.isPresent());
     Log.getFindings().clear();
     
-    StatechartWithTimerCoCoChecker checker = new StatechartWithTimerCoCoChecker();
+    TimeTriggeredStatechartsCoCoChecker checker = new TimeTriggeredStatechartsCoCoChecker();
     checker.addChecker(TimeTriggerConditionsCoCos.createChecker());
     checker.checkAll(result.get());
     

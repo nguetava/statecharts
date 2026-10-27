@@ -1,14 +1,14 @@
 /* (c) https://github.com/MontiCore/monticore */
-package de.monticore.statechartwithtimer.parser;
+package de.monticore.timetriggeredstatecharts.parser;
 
 import de.monticore.scbasis._ast.ASTSCArtifact;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import de.monticore.statechartwithtimer.StatechartWithTimerMill;
-import de.monticore.statechartwithtimer._ast.ASTTimerEvent;
-import de.monticore.statechartwithtimer._parser.StatechartWithTimerParser;
-import de.monticore.statechartwithtimer.lang.AbstractTest;
+import de.monticore.timetriggeredstatecharts.TimeTriggeredStatechartsMill;
+import de.monticore.timetriggeredstatecharts._ast.ASTTimerEvent;
+import de.monticore.timetriggeredstatecharts._parser.TimeTriggeredStatechartsParser;
+import de.monticore.timetriggeredstatecharts.lang.AbstractTest;
 import de.monticore.temporal.timetriggerconditions._ast.ASTCronCondition;
 import de.monticore.temporal.timetriggerconditions._ast.ASTCronName;
 import de.monticore.temporal.timetriggerconditions._ast.ASTCronNumber;
@@ -73,7 +73,7 @@ public class CronConditionParserTest extends AbstractTest {
   }
   
   protected void assertDoesNotParse(String event) throws IOException {
-    StatechartWithTimerParser parser = StatechartWithTimerMill.parser();
+    TimeTriggeredStatechartsParser parser = TimeTriggeredStatechartsMill.parser();
     parser.parse_StringSCArtifact(statechartWith(event));
     
     assertTrue(parser.hasErrors(), event);
@@ -81,9 +81,9 @@ public class CronConditionParserTest extends AbstractTest {
   
   protected List<ASTCronCondition> findCronConditions(ASTSCArtifact statechart) {
     List<ASTCronCondition> conditions = new ArrayList<>();
-    var traverser = StatechartWithTimerMill.inheritanceTraverser();
-    traverser.add4StatechartWithTimer(
-        new de.monticore.statechartwithtimer._visitor.StatechartWithTimerVisitor2() {
+    var traverser = TimeTriggeredStatechartsMill.inheritanceTraverser();
+    traverser.add4TimeTriggeredStatecharts(
+        new de.monticore.timetriggeredstatecharts._visitor.TimeTriggeredStatechartsVisitor2() {
           
           @Override
           public void visit(ASTTimerEvent node) {

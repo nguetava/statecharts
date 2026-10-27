@@ -1,12 +1,12 @@
 /* (c) https://github.com/MontiCore/monticore */
-package de.monticore.statechartwithtimer.integration;
+package de.monticore.timetriggeredstatecharts.integration;
 
 import de.monticore.scbasis._ast.ASTSCArtifact;
 import de.se_rwth.commons.logging.Log;
 import org.junit.jupiter.api.Test;
-import de.monticore.statechartwithtimer.StatechartWithTimerMill;
-import de.monticore.statechartwithtimer._ast.ASTTimerEvent;
-import de.monticore.statechartwithtimer.lang.AbstractTest;
+import de.monticore.timetriggeredstatecharts.TimeTriggeredStatechartsMill;
+import de.monticore.timetriggeredstatecharts._ast.ASTTimerEvent;
+import de.monticore.timetriggeredstatecharts.lang.AbstractTest;
 import de.monticore.temporal.timetriggerconditions._ast.ASTCronCondition;
 import de.monticore.temporal.timetriggerconditions._ast.ASTCronName;
 import de.monticore.temporal.timetriggerconditions._ast.ASTCronRange;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CronStatechartIntegrationTest extends AbstractTest {
   
   protected static final String MODEL =
-      "src/test/resources/statechartwithtimer/parser/CronStatechart.sc";
+      "src/test/resources/timetriggeredstatecharts/parser/CronStatechart.sc";
   
   @Test
   public void testCronStatechartEndToEnd() {
@@ -52,9 +52,9 @@ public class CronStatechartIntegrationTest extends AbstractTest {
   
   protected List<ASTCronCondition> findCronConditions(ASTSCArtifact statechart) {
     List<ASTCronCondition> conditions = new ArrayList<>();
-    var traverser = StatechartWithTimerMill.inheritanceTraverser();
-    traverser.add4StatechartWithTimer(
-        new de.monticore.statechartwithtimer._visitor.StatechartWithTimerVisitor2() {
+    var traverser = TimeTriggeredStatechartsMill.inheritanceTraverser();
+    traverser.add4TimeTriggeredStatecharts(
+        new de.monticore.timetriggeredstatecharts._visitor.TimeTriggeredStatechartsVisitor2() {
           
           @Override
           public void visit(ASTTimerEvent node) {

@@ -1,13 +1,13 @@
 /* (c) https://github.com/MontiCore/monticore */
-package de.monticore.statechartwithtimer.lang;
+package de.monticore.timetriggeredstatecharts.lang;
 
 import de.monticore.scbasis._ast.ASTSCArtifact;
 import de.se_rwth.commons.logging.Log;
 import de.se_rwth.commons.logging.LogStub;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.jupiter.api.BeforeEach;
-import de.monticore.statechartwithtimer.StatechartWithTimerMill;
-import de.monticore.statechartwithtimer._parser.StatechartWithTimerParser;
+import de.monticore.timetriggeredstatecharts.TimeTriggeredStatechartsMill;
+import de.monticore.timetriggeredstatecharts._parser.TimeTriggeredStatechartsParser;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -27,8 +27,8 @@ public abstract class AbstractTest {
   /** Resets the mill and the log so every test starts from a clean state. */
   @BeforeEach
   public void setUp() {
-    StatechartWithTimerMill.reset();
-    StatechartWithTimerMill.init();
+    TimeTriggeredStatechartsMill.reset();
+    TimeTriggeredStatechartsMill.init();
     LogStub.init();
     Log.enableFailQuick(false);
     Log.getFindings().clear();
@@ -42,7 +42,7 @@ public abstract class AbstractTest {
    */
   protected ASTSCArtifact parseModel(String modelFile) {
     Path model = Paths.get(modelFile);
-    StatechartWithTimerParser parser = StatechartWithTimerMill.parser();
+    TimeTriggeredStatechartsParser parser = TimeTriggeredStatechartsMill.parser();
     Optional<ASTSCArtifact> optAutomaton;
     try {
       optAutomaton = parser.parse(model.toString());
@@ -57,7 +57,7 @@ public abstract class AbstractTest {
   }
   
   protected ASTSCArtifact parseStringModel(String model) {
-    StatechartWithTimerParser parser = StatechartWithTimerMill.parser();
+    TimeTriggeredStatechartsParser parser = TimeTriggeredStatechartsMill.parser();
     Optional<ASTSCArtifact> optAutomaton;
     try {
       optAutomaton = parser.parse_StringSCArtifact(model);
